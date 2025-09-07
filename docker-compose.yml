@@ -21,7 +21,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: java_app
-    image: gastrosphere
+    image: qhealth-atendimento-usuario
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
