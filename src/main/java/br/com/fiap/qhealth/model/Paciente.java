@@ -39,16 +39,16 @@ public class Paciente {
 
     private String telefone;
 
-    @Column(name = "dataNascimento", nullable = false)
+    @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "enderecoId", nullable = false)
+    @JoinColumn(name = "endereco_id", nullable = false)
     private Endereco endereco;
 
-    @Column(name = "dataCriacao", nullable = false)
+    @Column(name = "data_criacao", nullable = false)
     private LocalDateTime dataCriacao;
 
-    @Column(name = "dataUltimaAlteracao")
+    @Column(name = "data_ultima_alteracao")
     private LocalDateTime dataUltimaAlteracao;
 }

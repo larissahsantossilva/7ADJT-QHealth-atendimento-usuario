@@ -35,9 +35,9 @@ public class Endereco {
 
     private String cidade;
 
-    @Column(name = "dataCriacao", nullable = false)
+    @Column(name = "data_criacao", nullable = false)
     private LocalDateTime dataCriacao;
 
-    @Column(name = "dataUltimaAlteracao")
+    @Column(name = "data_ultima_alteracao")
     private LocalDateTime dataUltimaAlteracao;
 }
