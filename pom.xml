@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.fiap</groupId>
-	<artifactId>qhealth</artifactId>
+	<artifactId>qhealth-atendimento-usuario</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>qhealth</name>
+	<name>qhealth-atendimento-usuario</name>
 	<description>MS atendimento usuário</description>
 	<url/>
 	<licenses>
