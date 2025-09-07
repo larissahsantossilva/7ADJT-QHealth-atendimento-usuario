@@ -10,8 +10,8 @@ CREATE TABLE usuario.endereco (
     complemento VARCHAR(255),
     bairro VARCHAR(255) NOT NULL,
     cidade VARCHAR(255) NOT NULL,
-    dataCriacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    dataUltimaAlteracao TIMESTAMP
+    data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_ultima_alteracao TIMESTAMP
 );
 
 CREATE TABLE usuario.paciente (
@@ -23,12 +23,12 @@ CREATE TABLE usuario.paciente (
     cpf VARCHAR(11) NOT NULL,
     genero VARCHAR(1) NOT NULL,
     telefone VARCHAR(255) NOT NULL,
-    dataNascimento DATE NOT NULL,
-    enderecoId UUID NOT NULL,
-    dataCriacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    dataUltimaAlteracao TIMESTAMP,
+    data_nascimento DATE NOT NULL,
+    endereco_id  UUID NOT NULL,
+    data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_ultima_alteracao TIMESTAMP,
 
-    CONSTRAINT fk_paciente_endereco FOREIGN KEY (enderecoId)
+    CONSTRAINT fk_paciente_endereco FOREIGN KEY (endereco_id )
         REFERENCES usuario.endereco(id)
 );
 

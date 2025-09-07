@@ -8,7 +8,7 @@ INSERT INTO usuario.endereco (
 
 -- Pacientes
 INSERT INTO usuario.paciente (
-    nome, email, login, senha, cpf, genero, telefone, dataNascimento, enderecoId
+    nome, email, login, senha, cpf, genero, telefone, data_nascimento, endereco_id
 ) VALUES (
     'Maria Silva', 'maria.silva@example.com', 'mariasilva', 'senha123',
     '12345678901', 'F', '(11) 91234-5678', '1990-03-15',
@@ -16,7 +16,7 @@ INSERT INTO usuario.paciente (
 );
 
 INSERT INTO usuario.paciente (
-    nome, email, login, senha, cpf, genero, telefone, dataNascimento, enderecoId
+    nome, email, login, senha, cpf, genero, telefone, data_nascimento, endereco_id
 ) VALUES (
     'João Souza', 'joao.souza@example.com', 'joaosouza', 'senha456',
     '09876543210', 'M', '(21) 99876-5432', '1988-07-20',
@@ -24,7 +24,7 @@ INSERT INTO usuario.paciente (
 );
 
 INSERT INTO usuario.paciente (
-    nome, email, login, senha, cpf, genero, telefone, dataNascimento, enderecoId
+    nome, email, login, senha, cpf, genero, telefone, data_nascimento, endereco_id
 ) VALUES (
     'Ana Lima', 'ana.lima@example.com', 'analima', 'senha789',
     '11223344556', 'F', '(31) 98765-4321', '1995-11-05',
