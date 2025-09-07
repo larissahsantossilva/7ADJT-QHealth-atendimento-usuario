@@ -1,5 +1,7 @@
 package br.com.fiap.qhealth.utils;
 
+import br.com.fiap.qhealth.dto.request.PacienteBodyRequest;
+import br.com.fiap.qhealth.exception.ResourceNotFoundException;
 import br.com.fiap.qhealth.model.Paciente;
 import org.modelmapper.ModelMapper;
 

@@ -1,5 +1,6 @@
 package br.com.fiap.qhealth.service;
 
+import br.com.fiap.qhealth.exception.ResourceNotFoundException;
 import br.com.fiap.qhealth.model.Paciente;
 import br.com.fiap.qhealth.repository.PacienteRepository;
 import lombok.AllArgsConstructor;
