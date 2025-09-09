@@ -6,7 +6,6 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,7 +13,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class PacienteBodyRequest {
+public class  PacienteBodyRequest {
 
     @NotBlank(message = "Nome é obrigatório")
     private String nome;
@@ -44,8 +43,8 @@ public class PacienteBodyRequest {
     @NotNull(message = "Data de nascimento é obrigatória")
     private LocalDate dataNascimento;
 
-    @NotNull
     @Valid
+    @NotNull
     private EnderecoRequest endereco;
 
 }
