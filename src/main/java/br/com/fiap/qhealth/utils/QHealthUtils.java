@@ -1,9 +1,12 @@
 package br.com.fiap.qhealth.utils;
 
+import br.com.fiap.qhealth.dto.request.AnamneseRequest;
 import br.com.fiap.qhealth.dto.request.PacienteAtualizarBodyRequest;
 import br.com.fiap.qhealth.dto.request.PacienteBodyRequest;
+import br.com.fiap.qhealth.dto.response.AnamneseResponse;
 import br.com.fiap.qhealth.dto.response.PacienteBodyResponse;
 import br.com.fiap.qhealth.exception.ResourceNotFoundException;
+import br.com.fiap.qhealth.model.Anamnese;
 import br.com.fiap.qhealth.model.Paciente;
 import org.modelmapper.ModelMapper;
 
@@ -35,5 +38,16 @@ public class QHealthUtils {
     public static PacienteBodyResponse convertToPaciente(Paciente pacienteEntity) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(pacienteEntity, PacienteBodyResponse.class);
+    }
+
+
+    public static Anamnese convertToAnamnese(AnamneseRequest anamnese) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(anamnese, Anamnese.class);
+    }
+
+    public static AnamneseResponse convertToAnamnese(Anamnese anamnese) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(anamnese, AnamneseResponse.class);
     }
 }
