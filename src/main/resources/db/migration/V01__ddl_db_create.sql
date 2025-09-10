@@ -32,3 +32,13 @@ CREATE TABLE usuario.paciente (
         REFERENCES usuario.endereco(id)
 );
 
+CREATE TABLE usuario.anamnese (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    fumante BOOLEAN NOT NULL,
+    gravida BOOLEAN NOT NULL,
+    diabetico BOOLEAN NOT NULL,
+    hipertenso BOOLEAN NOT NULL,
+    data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_ultima_alteracao TIMESTAMP
+);
+

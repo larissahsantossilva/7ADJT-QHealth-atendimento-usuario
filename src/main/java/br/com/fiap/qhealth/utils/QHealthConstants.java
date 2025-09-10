@@ -14,4 +14,6 @@ public final class QHealthConstants {
     public static final String PACIENTE_NAO_ENCONTRADO = "Paciente não encontrado.";
     public static final String PACIENTE_CRIADO_COM_SUCESSO = "Paciente criado com sucesso.";
     public static final String ERRO_AO_DELETAR_PACIENTE = "Erro ao deletar paciente.";
+
+    public static final String ERRO_AO_CRIAR_ANAMNESE = "Erro ao criar paciente.";
 }

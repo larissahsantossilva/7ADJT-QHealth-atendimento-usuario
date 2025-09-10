@@ -31,3 +31,9 @@ INSERT INTO usuario.paciente (
     (SELECT id FROM usuario.endereco WHERE rua = 'Rua Sete de Setembro' AND numero = 789 LIMIT 1)
 );
 
+INSERT INTO usuario.anamnese (
+    id, fumante, gravida, diabetico, hipertenso, data_criacao, data_ultima_alteracao
+) VALUES
+(gen_random_uuid(), TRUE, FALSE, TRUE, FALSE, now(), NULL),
+(gen_random_uuid(), FALSE, TRUE, FALSE, TRUE, now(), now()),
+(gen_random_uuid(), FALSE, FALSE, TRUE, TRUE, now(), now());
