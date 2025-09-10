@@ -3,7 +3,6 @@ package br.com.fiap.qhealth.service;
 import br.com.fiap.qhealth.exception.ResourceNotFoundException;
 import br.com.fiap.qhealth.exception.UnprocessableEntityException;
 import br.com.fiap.qhealth.model.Anamnese;
-import br.com.fiap.qhealth.model.Paciente;
 import br.com.fiap.qhealth.repository.AnamneseRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ public class AnamneseService {
 
     private static final Logger logger = getLogger(AnamneseService.class);
 
-    public Page<Anamnese> listarPacientes(int page, int size) {
+    public Page<Anamnese> listarAnamneses(int page, int size) {
         return repository.findAll(of(page, size));
     }
 
@@ -48,7 +47,7 @@ public class AnamneseService {
 
     public void atualizarAnamneseExistente(Anamnese anamnese, UUID id) {
         Anamnese anamneseExistente = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(PACIENTE_NAO_ENCONTRADO));
+                .orElseThrow(() -> new ResourceNotFoundException(ANAMNESE_NAO_ENCONTRADO));
         if (anamnese != null) {
             anamneseExistente.setDiabetico(anamnese.isDiabetico());
             anamneseExistente.setFumante(anamnese.isFumante());
@@ -59,21 +58,21 @@ public class AnamneseService {
         try {
             repository.save(anamneseExistente);
         } catch (DataAccessException e) {
-            logger.error(ERRO_AO_ALTERAR_PACIENTE, e);
-            throw new UnprocessableEntityException(ERRO_AO_ALTERAR_PACIENTE);
+            logger.error(ERRO_AO_ALTERAR_ANAMNESE, e);
+            throw new UnprocessableEntityException(ERRO_AO_ALTERAR_ANAMNESE);
         }
     }
 
     public void excluirAnamnesePorId(UUID id) {
         uuidValidator(id);
         Anamnese anamnese = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(PACIENTE_NAO_ENCONTRADO));
+                .orElseThrow(() -> new ResourceNotFoundException(ANAMNESE_NAO_ENCONTRADO));
         UUID usuarioId = anamnese.getId();
         try {
             repository.deleteById(id);
         } catch (DataAccessException e) {
-            logger.error(ERRO_AO_DELETAR_PACIENTE, e);
-            throw new UnprocessableEntityException(ERRO_AO_DELETAR_PACIENTE);
+            logger.error(ERRO_AO_DELETAR_ANAMNESE, e);
+            throw new UnprocessableEntityException(ERRO_AO_DELETAR_ANAMNESE);
         }
     }
 }

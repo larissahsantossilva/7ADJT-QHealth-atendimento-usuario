@@ -1,6 +1,7 @@
 package br.com.fiap.qhealth.dto.request;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "DTO para atualizar Paciente")
 public class PacienteAtualizarBodyRequest {
 
     private String nome;

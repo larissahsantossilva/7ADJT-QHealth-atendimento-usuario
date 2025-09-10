@@ -2,6 +2,7 @@ package br.com.fiap.qhealth.dto.response;
 
 import br.com.fiap.qhealth.model.Endereco;
 import br.com.fiap.qhealth.model.Paciente;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,6 +18,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "DTO para retorno de Paciente")
 public class PacienteBodyResponse {
 
     private UUID id;

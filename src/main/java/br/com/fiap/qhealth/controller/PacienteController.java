@@ -13,6 +13,11 @@ import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +25,6 @@ import java.util.UUID;
 import static br.com.fiap.qhealth.utils.QHealthConstants.*;
 import static br.com.fiap.qhealth.utils.QHealthUtils.convertToPaciente;
 import static org.slf4j.LoggerFactory.getLogger;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.ResponseEntity.*;
 
 @RestController
@@ -33,6 +37,17 @@ public class PacienteController {
 
     private final PacienteService pacienteService;
 
+    @Operation(
+            description = "Busca todos os pacientes de forma paginada.",
+            summary = "Busca todos os pacientes de forma paginada.",
+            responses = {
+                    @ApiResponse(
+                            description = OK,
+                            responseCode = HTTP_STATUS_CODE_200,
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Paciente.class))
+                    )
+            }
+    )
     @GetMapping
     public ResponseEntity<List<PacienteBodyResponse>> listarPacientes(
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -46,6 +61,22 @@ public class PacienteController {
         return ok(pacienteResponses);
     }
 
+    @Operation(
+            description = "Busca paciente por id.",
+            summary = "Busca paciente por id.",
+            responses = {
+                    @ApiResponse(
+                            description = OK,
+                            responseCode = HTTP_STATUS_CODE_200,
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Paciente.class))
+                    ),
+                    @ApiResponse(
+                            description = NOT_FOUND,
+                            responseCode = HTTP_STATUS_CODE_404,
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))
+                    )
+            }
+    )
     @GetMapping("/{id}")
     public ResponseEntity<PacienteBodyResponse> buscarPacientePorId(@PathVariable("id") UUID id) {
         logger.info("GET | {} | Iniciado buscarPacientePorId | id: {}", V1_PACIENTE, id);
@@ -55,9 +86,25 @@ public class PacienteController {
             return ok(convertToPaciente(paciente));
         }
         logger.info("GET | {} | Finalizado √ No Content | id: {}", V1_PACIENTE, id);
-        return status(NOT_FOUND).build();
+        return status(404).build();
     }
 
+    @Operation(
+            description = "Cria paciente.",
+            summary = "Cria paciente.",
+            responses = {
+                    @ApiResponse(
+                            description = PACIENTE_CRIADO_COM_SUCESSO,
+                            responseCode = HTTP_STATUS_CODE_201,
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+                    ),
+                    @ApiResponse(
+                            description = ERRO_AO_CRIAR_PACIENTE,
+                            responseCode = HTTP_STATUS_CODE_422,
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+                    ),
+            }
+    )
     @PostMapping
     public ResponseEntity<UUID> criarPaciente(@Valid @RequestBody PacienteBodyRequest pacienteBodyRequest) {
         logger.info("POST | {} | Iniciado criarPaciente | Paciente: {}", V1_PACIENTE, pacienteBodyRequest.getNome());
@@ -66,6 +113,27 @@ public class PacienteController {
         return status(201).body(paciente.getId());
     }
 
+    @Operation(
+            description = "Atualiza paciente por id.",
+            summary = "Atualiza paciente por id.",
+            responses = {
+                    @ApiResponse(
+                            description = OK,
+                            responseCode = HTTP_STATUS_CODE_200,
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))
+                    ),
+                    @ApiResponse(
+                            description = PACIENTE_NAO_ENCONTRADO,
+                            responseCode = HTTP_STATUS_CODE_404,
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+                    ),
+                    @ApiResponse(
+                            description = ERRO_AO_ALTERAR_PACIENTE,
+                            responseCode = HTTP_STATUS_CODE_422,
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+                    )
+            }
+    )
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarPaciente(@PathVariable("id") UUID id, @Valid @RequestBody PacienteAtualizarBodyRequest pacienteBodyRequest) {
         logger.info("PUT | {} | Iniciado atualizarPaciente | id: {}", V1_PACIENTE, id);
@@ -74,6 +142,22 @@ public class PacienteController {
         return ok("Paciente atualizado com sucesso");
     }
 
+    @Operation(
+            description = "Exclui paciente por id.",
+            summary = "Exclui paciente por id.",
+            responses = {
+                    @ApiResponse(
+                            description = NO_CONTENT,
+                            responseCode = HTTP_STATUS_CODE_204,
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))
+                    ),
+                    @ApiResponse(
+                            description = PACIENTE_NAO_ENCONTRADO,
+                            responseCode = HTTP_STATUS_CODE_404,
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+                    )
+            }
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<String> excluirPacientePorId(@PathVariable("id") UUID id) {
         logger.info("DELETE | {} | Iniciado excluirPaciente | id: {}", V1_PACIENTE, id);
@@ -83,7 +167,7 @@ public class PacienteController {
             return noContent().build();
         } catch (UnprocessableEntityException e) {
             logger.error("DELETE | {} | Erro ao excluir paciente | Id: {} | Erro: {}", V1_PACIENTE, id, e.getMessage());
-            return status(NOT_FOUND).body(PACIENTE_NAO_ENCONTRADO);
+            return status(404).body(PACIENTE_NAO_ENCONTRADO);
         }
     }
 }
