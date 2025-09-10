@@ -1,5 +1,6 @@
 package br.com.fiap.qhealth.controller;
 
+import br.com.fiap.qhealth.dto.request.PacienteAtualizarBodyRequest;
 import br.com.fiap.qhealth.dto.request.PacienteBodyRequest;
 import br.com.fiap.qhealth.dto.response.PacienteBodyResponse;
 import br.com.fiap.qhealth.exception.UnprocessableEntityException;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-import static br.com.fiap.qhealth.utils.QHealthConstants.PACIENTE_NAO_ENCONTRADO;
+import static br.com.fiap.qhealth.utils.QHealthConstants.*;
 import static br.com.fiap.qhealth.utils.QHealthUtils.convertToPaciente;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -24,10 +25,9 @@ import static org.springframework.http.ResponseEntity.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(PacienteController.V1_PACIENTE)
+@RequestMapping(V1_PACIENTE)
 public class PacienteController {
 
-    public static final String V1_PACIENTE = "/api/v1/pacientes";
 
     private static final Logger logger = getLogger(PacienteController.class);
 
@@ -67,13 +67,14 @@ public class PacienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarPaciente(@PathVariable("id") UUID id, @Valid @RequestBody PacienteBodyRequest pacienteBodyRequest) {
+    public ResponseEntity<String> atualizarPaciente(@PathVariable("id") UUID id, @Valid @RequestBody PacienteAtualizarBodyRequest pacienteBodyRequest) {
         logger.info("PUT | {} | Iniciado atualizarPaciente | id: {}", V1_PACIENTE, id);
-        pacienteService.atualizarPaciente(convertToPaciente(pacienteBodyRequest), id);
+        pacienteService.atualizarPacienteExistente(convertToPaciente(pacienteBodyRequest), id);
         logger.info("PUT | {} | Finalizado atualizarPaciente", V1_PACIENTE);
         return ok("Paciente atualizado com sucesso");
     }
 
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> excluirPacientePorId(@PathVariable("id") UUID id) {
         logger.info("DELETE | {} | Iniciado excluirPaciente | id: {}", V1_PACIENTE, id);
         try {

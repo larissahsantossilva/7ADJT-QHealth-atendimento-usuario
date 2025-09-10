@@ -10,23 +10,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class EnderecoRequest {
+public class EnderecoAtualizarRequest {
 
-    @NotBlank(message = "Rua é de preenchimento obrigatório.")
     private String rua;
 
-    @NotNull(message = "número é de preenchimento obrigatório.")
     private Integer numero;
 
-    @NotBlank(message = " cep é de preenchimento obrigatório.")
-    @Pattern(regexp = "\\d{8}", message = "CEP deve conter 8 caracteres.")
+    @Pattern(regexp = "\\d{8}", message = "CEP deve contar 8 caracteres.")
     private String cep;
 
     private String complemento;
 
-    @NotBlank(message = "bairro é de preenchimento obrigatório.")
     private String bairro;
 
-    @NotBlank(message = "cidade é de preenchimento obrigatório.")
     private String cidade;
 }

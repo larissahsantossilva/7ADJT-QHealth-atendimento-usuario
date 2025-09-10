@@ -1,8 +1,10 @@
 package br.com.fiap.qhealth.utils;
 
-public class QHealthConstants {
+public final class QHealthConstants {
 
     private QHealthConstants(){}
+
+    public static final String V1_PACIENTE = "/api/v1/pacientes";
 
     public static final String ID_INVALIDO = "ID inválido.";
     public static final String ID_NAO_ENCONTRADO = "ID não encontrado.";

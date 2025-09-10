@@ -51,4 +51,15 @@ public class Paciente {
 
     @Column(name = "data_ultima_alteracao")
     private LocalDateTime dataUltimaAlteracao;
+
+    @PrePersist
+    protected void onCreate() {
+        this.dataCriacao = LocalDateTime.now();
+        this.dataUltimaAlteracao = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.dataUltimaAlteracao = LocalDateTime.now();
+    }
 }

@@ -1,5 +1,6 @@
 package br.com.fiap.qhealth.utils;
 
+import br.com.fiap.qhealth.dto.request.PacienteAtualizarBodyRequest;
 import br.com.fiap.qhealth.dto.request.PacienteBodyRequest;
 import br.com.fiap.qhealth.dto.response.PacienteBodyResponse;
 import br.com.fiap.qhealth.exception.ResourceNotFoundException;
@@ -22,6 +23,11 @@ public class QHealthUtils {
     }
 
     public static Paciente convertToPaciente(PacienteBodyRequest pacienteRequest) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(pacienteRequest, Paciente.class);
+    }
+
+    public static Paciente convertToPaciente(PacienteAtualizarBodyRequest pacienteRequest) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(pacienteRequest, Paciente.class);
     }
