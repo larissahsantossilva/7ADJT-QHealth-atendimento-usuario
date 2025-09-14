@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static jakarta.persistence.GenerationType.AUTO;
+import static java.time.LocalDateTime.now;
 
 @Entity
 @Getter
@@ -36,12 +37,12 @@ public class Anamnese {
 
     @PrePersist
     protected void onCreate() {
-        this.dataCriacao = LocalDateTime.now();
-        this.dataUltimaAlteracao = LocalDateTime.now();
+        this.dataCriacao = now();
+        this.dataUltimaAlteracao = now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.dataUltimaAlteracao = LocalDateTime.now();
+        this.dataUltimaAlteracao = now();
     }
 }

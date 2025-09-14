@@ -32,7 +32,6 @@ import static org.springframework.http.ResponseEntity.*;
 @RequestMapping(V1_PACIENTE)
 public class PacienteController {
 
-
     private static final Logger logger = getLogger(PacienteController.class);
 
     private final PacienteService pacienteService;
