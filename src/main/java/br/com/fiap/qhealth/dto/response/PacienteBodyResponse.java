@@ -21,8 +21,6 @@ import static jakarta.persistence.FetchType.LAZY;
 @Schema(description = "DTO para retorno de Paciente")
 public class PacienteBodyResponse {
 
-    private UUID id;
-
     private String nome;
 
     private String email;

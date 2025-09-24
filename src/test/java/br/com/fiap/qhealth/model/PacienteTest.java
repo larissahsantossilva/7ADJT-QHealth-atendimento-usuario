@@ -37,18 +37,16 @@ class PacienteTest {
 
     @Test
     void deveCriarComTodosOsCampos() {
-        UUID id = UUID.randomUUID();
+        String cpf = "12345678901";
         Endereco endereco = new Endereco();
         LocalDate nascimento = LocalDate.of(2000, 1, 1);
         LocalDateTime agora = LocalDateTime.now();
-
         Paciente p = new Paciente(
-                id,
+                cpf,
                 "Nome Teste",
                 "email@teste.com",
                 "loginUser",
                 "senha123",
-                "12345678901",
                 "M",
                 "11999999999",
                 nascimento,
@@ -57,7 +55,7 @@ class PacienteTest {
                 agora
         );
 
-        assertEquals(id, p.getId());
+        assertEquals(cpf, p.getCpf());
         assertEquals("Nome Teste", p.getNome());
         assertEquals("email@teste.com", p.getEmail());
         assertEquals("loginUser", p.getLogin());
@@ -74,17 +72,16 @@ class PacienteTest {
     @Test
     void settersEGettersDevemFuncionar() {
         Paciente p = new Paciente();
-        UUID id = UUID.randomUUID();
+        String cpf = "98765432100";
         Endereco e = new Endereco();
         LocalDate nascimento = LocalDate.of(1995, 5, 15);
         LocalDateTime agora = LocalDateTime.now();
 
-        p.setId(id);
         p.setNome("Maria");
         p.setEmail("maria@teste.com");
         p.setLogin("mariaLogin");
         p.setSenha("senha123");
-        p.setCpf("98765432100");
+        p.setCpf(cpf);
         p.setGenero("F");
         p.setTelefone("1188888888");
         p.setDataNascimento(nascimento);
@@ -92,7 +89,7 @@ class PacienteTest {
         p.setDataCriacao(agora);
         p.setDataUltimaAlteracao(agora);
 
-        assertEquals(id, p.getId());
+        assertEquals(cpf, p.getCpf());
         assertEquals("Maria", p.getNome());
         assertEquals("maria@teste.com", p.getEmail());
         assertEquals("mariaLogin", p.getLogin());

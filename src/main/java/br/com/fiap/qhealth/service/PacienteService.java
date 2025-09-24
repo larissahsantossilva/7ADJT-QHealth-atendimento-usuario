@@ -34,9 +34,8 @@ public class PacienteService {
         return pacienteRepository.findAll(of(page, size));
     }
 
-    public Paciente buscarPacientePorId(UUID id) {
-        uuidValidator(id);
-        return pacienteRepository.findById(id).orElseThrow(() ->
+    public Paciente buscarPacientePorId(String cpf) {
+        return pacienteRepository.findById(cpf).orElseThrow(() ->
                 new ResourceNotFoundException(ID_NAO_ENCONTRADO));
     }
 
@@ -53,7 +52,7 @@ public class PacienteService {
         }
     }
 
-    public void atualizarPacienteExistente(Paciente paciente, UUID id) {
+    public void atualizarPacienteExistente(Paciente paciente, String id) {
         Paciente pacienteExistente = pacienteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(PACIENTE_NAO_ENCONTRADO));
         atualizarPacienteExistente(paciente, pacienteExistente);
@@ -65,13 +64,12 @@ public class PacienteService {
         }
     }
 
-    public void excluirPacientePorId(UUID id) {
-        uuidValidator(id);
+    public void excluirPacientePorId(String id) {
         Paciente paciente = pacienteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(PACIENTE_NAO_ENCONTRADO));
-        UUID usuarioId = paciente.getId();
+        String usuarioCpf = paciente.getCpf();
         try {
-            pacienteRepository.deleteById(id);
+            pacienteRepository.deleteById(usuarioCpf);
         } catch (DataAccessException e) {
             logger.error(ERRO_AO_DELETAR_PACIENTE, e);
             throw new UnprocessableEntityException(ERRO_AO_DELETAR_PACIENTE);

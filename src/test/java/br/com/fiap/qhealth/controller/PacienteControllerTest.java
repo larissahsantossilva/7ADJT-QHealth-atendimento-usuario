@@ -38,7 +38,7 @@ class PacienteControllerTest {
         MockitoAnnotations.openMocks(this);
 
         paciente = new Paciente();
-        paciente.setId(UUID.randomUUID());
+        paciente.setCpf("41633271626");
         paciente.setNome("João da Silva");
         paciente.setLogin("joao.silva");
         paciente.setTelefone("11999999999");
@@ -69,57 +69,57 @@ class PacienteControllerTest {
 
     @Test
     void deveBuscarPacientePorIdComSucesso() {
-        when(pacienteService.buscarPacientePorId(paciente.getId())).thenReturn(paciente);
+        when(pacienteService.buscarPacientePorId(paciente.getCpf())).thenReturn(paciente);
 
-        ResponseEntity<PacienteBodyResponse> response = pacienteController.buscarPacientePorId(paciente.getId());
+        ResponseEntity<PacienteBodyResponse> response = pacienteController.buscarPacientePorId(paciente.getCpf());
 
         assertEquals(200, response.getStatusCodeValue());
-        assertEquals(paciente.getId(), response.getBody().getId());
+        assertEquals(paciente.getCpf(), response.getBody().getCpf());
         assertEquals(paciente.getNome(), response.getBody().getNome());
-        verify(pacienteService).buscarPacientePorId(paciente.getId());
+        verify(pacienteService).buscarPacientePorId(paciente.getCpf());
     }
 
     @Test
     void deveRetornar404QuandoPacienteNaoEncontrado() {
-        when(pacienteService.buscarPacientePorId(paciente.getId())).thenReturn(null);
+        when(pacienteService.buscarPacientePorId(paciente.getCpf())).thenReturn(null);
 
-        ResponseEntity<PacienteBodyResponse> response = pacienteController.buscarPacientePorId(paciente.getId());
+        ResponseEntity<PacienteBodyResponse> response = pacienteController.buscarPacientePorId(paciente.getCpf());
 
         assertEquals(404, response.getStatusCodeValue());
         assertNull(response.getBody());
-        verify(pacienteService).buscarPacientePorId(paciente.getId());
+        verify(pacienteService).buscarPacientePorId(paciente.getCpf());
     }
 
     @Test
     void deveCriarPacienteComSucesso() {
         when(pacienteService.criarPaciente(any())).thenReturn(paciente);
 
-        ResponseEntity<UUID> response = pacienteController.criarPaciente(bodyRequest);
+        ResponseEntity<String> response = pacienteController.criarPaciente(bodyRequest);
 
         assertEquals(201, response.getStatusCodeValue());
-        assertEquals(paciente.getId(), response.getBody());
+        assertEquals(paciente.getCpf(), response.getBody());
         verify(pacienteService).criarPaciente(any());
     }
 
     @Test
     void deveAtualizarPacienteComSucesso() {
-        doNothing().when(pacienteService).atualizarPacienteExistente(any(), eq(paciente.getId()));
+        doNothing().when(pacienteService).atualizarPacienteExistente(any(), eq(paciente.getCpf()));
 
-        ResponseEntity<String> response = pacienteController.atualizarPaciente(paciente.getId(), atualizarRequest);
+        ResponseEntity<String> response = pacienteController.atualizarPaciente(paciente.getCpf(), atualizarRequest);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("Paciente atualizado com sucesso", response.getBody());
-        verify(pacienteService).atualizarPacienteExistente(any(), eq(paciente.getId()));
+        verify(pacienteService).atualizarPacienteExistente(any(), eq(paciente.getCpf()));
     }
 
     @Test
     void deveExcluirPacienteComSucesso() {
-        doNothing().when(pacienteService).excluirPacientePorId(paciente.getId());
+        doNothing().when(pacienteService).excluirPacientePorId(paciente.getCpf());
 
-        ResponseEntity<String> response = pacienteController.excluirPacientePorId(paciente.getId());
+        ResponseEntity<String> response = pacienteController.excluirPacientePorId(paciente.getCpf());
 
         assertEquals(204, response.getStatusCodeValue());
         assertNull(response.getBody());
-        verify(pacienteService).excluirPacientePorId(paciente.getId());
+        verify(pacienteService).excluirPacientePorId(paciente.getCpf());
     }
 }

@@ -8,10 +8,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.AUTO;
 import static java.time.LocalDateTime.now;
 
 @Entity
@@ -23,8 +21,8 @@ import static java.time.LocalDateTime.now;
 public class Paciente {
 
     @Id
-    @GeneratedValue(strategy = AUTO)
-    private UUID id;
+    @Column(length = 11, nullable = false, unique = true)
+    private String cpf;
 
     private String nome;
 
@@ -33,8 +31,6 @@ public class Paciente {
     private String login;
 
     private String senha;
-
-    private String cpf;
 
     private String genero;
 

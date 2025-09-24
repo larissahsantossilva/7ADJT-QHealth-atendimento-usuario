@@ -61,8 +61,8 @@ public class PacienteController {
     }
 
     @Operation(
-            description = "Busca paciente por id.",
-            summary = "Busca paciente por id.",
+            description = "Busca paciente por cpf.",
+            summary = "Busca paciente por cpf.",
             responses = {
                     @ApiResponse(
                             description = OK,
@@ -76,15 +76,15 @@ public class PacienteController {
                     )
             }
     )
-    @GetMapping("/{id}")
-    public ResponseEntity<PacienteBodyResponse> buscarPacientePorId(@PathVariable("id") UUID id) {
-        logger.info("GET | {} | Iniciado buscarPacientePorId | id: {}", V1_PACIENTE, id);
-        var paciente = pacienteService.buscarPacientePorId(id);
+    @GetMapping("/{cpf}")
+    public ResponseEntity<PacienteBodyResponse> buscarPacientePorId(@PathVariable("cpf") String cpf) {
+        logger.info("GET | {} | Iniciado buscarPacientePorId | id: {}", V1_PACIENTE, cpf);
+        var paciente = pacienteService.buscarPacientePorId(cpf);
         if (paciente != null) {
-            logger.info("GET | {} | Finalizado buscarPacientePorId | id: {}", V1_PACIENTE, id);
+            logger.info("GET | {} | Finalizado buscarPacientePorId | id: {}", V1_PACIENTE, cpf);
             return ok(convertToPaciente(paciente));
         }
-        logger.info("GET | {} | Finalizado √ No Content | id: {}", V1_PACIENTE, id);
+        logger.info("GET | {} | Finalizado √ No Content | id: {}", V1_PACIENTE, cpf);
         return status(404).build();
     }
 
@@ -105,16 +105,16 @@ public class PacienteController {
             }
     )
     @PostMapping
-    public ResponseEntity<UUID> criarPaciente(@Valid @RequestBody PacienteBodyRequest pacienteBodyRequest) {
+    public ResponseEntity<String> criarPaciente(@Valid @RequestBody PacienteBodyRequest pacienteBodyRequest) {
         logger.info("POST | {} | Iniciado criarPaciente | Paciente: {}", V1_PACIENTE, pacienteBodyRequest.getNome());
         Paciente paciente = pacienteService.criarPaciente(convertToPaciente(pacienteBodyRequest));
         logger.info("POST | {} | Finalizado criarPaciente", V1_PACIENTE);
-        return status(201).body(paciente.getId());
+        return status(201).body(paciente.getCpf());
     }
 
     @Operation(
-            description = "Atualiza paciente por id.",
-            summary = "Atualiza paciente por id.",
+            description = "Atualiza paciente por cpf.",
+            summary = "Atualiza paciente por cpf.",
             responses = {
                     @ApiResponse(
                             description = OK,
@@ -133,10 +133,10 @@ public class PacienteController {
                     )
             }
     )
-    @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarPaciente(@PathVariable("id") UUID id, @Valid @RequestBody PacienteAtualizarBodyRequest pacienteBodyRequest) {
-        logger.info("PUT | {} | Iniciado atualizarPaciente | id: {}", V1_PACIENTE, id);
-        pacienteService.atualizarPacienteExistente(convertToPaciente(pacienteBodyRequest), id);
+    @PutMapping("/{cpf}")
+    public ResponseEntity<String> atualizarPaciente(@PathVariable("cpf") String cpf, @Valid @RequestBody PacienteAtualizarBodyRequest pacienteBodyRequest) {
+        logger.info("PUT | {} | Iniciado atualizarPaciente | id: {}", V1_PACIENTE, cpf);
+        pacienteService.atualizarPacienteExistente(convertToPaciente(pacienteBodyRequest), cpf);
         logger.info("PUT | {} | Finalizado atualizarPaciente", V1_PACIENTE);
         return ok("Paciente atualizado com sucesso");
     }
@@ -157,15 +157,15 @@ public class PacienteController {
                     )
             }
     )
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> excluirPacientePorId(@PathVariable("id") UUID id) {
-        logger.info("DELETE | {} | Iniciado excluirPaciente | id: {}", V1_PACIENTE, id);
+    @DeleteMapping("/{cpf}")
+    public ResponseEntity<String> excluirPacientePorId(@PathVariable("cpf") String cpf) {
+        logger.info("DELETE | {} | Iniciado excluirPaciente | id: {}", V1_PACIENTE, cpf);
         try {
-            pacienteService.excluirPacientePorId(id);
-            logger.info("DELETE | {} | Paciente excluído com sucesso | Id: {}", V1_PACIENTE, id);
+            pacienteService.excluirPacientePorId(cpf);
+            logger.info("DELETE | {} | Paciente excluído com sucesso | Id: {}", V1_PACIENTE, cpf);
             return noContent().build();
         } catch (UnprocessableEntityException e) {
-            logger.error("DELETE | {} | Erro ao excluir paciente | Id: {} | Erro: {}", V1_PACIENTE, id, e.getMessage());
+            logger.error("DELETE | {} | Erro ao excluir paciente | Id: {} | Erro: {}", V1_PACIENTE, cpf, e.getMessage());
             return status(404).body(PACIENTE_NAO_ENCONTRADO);
         }
     }

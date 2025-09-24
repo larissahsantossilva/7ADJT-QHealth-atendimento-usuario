@@ -37,18 +37,18 @@ class PacienteServiceTest {
     @InjectMocks
     private PacienteService service;
 
-    private UUID id;
+    private String cpf;
     private Paciente paciente;
     private Endereco endereco;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        id = UUID.randomUUID();
+        cpf = "12345678901";
         endereco = new Endereco(UUID.randomUUID(), "Rua A", 123, "12345678",
                 "Apto 1", "Bairro", "Cidade", LocalDateTime.now(), LocalDateTime.now());
-        paciente = new Paciente(id, "João", "joao@email.com", "login",
-                "senha123", "12345678901", "M", "11999999999",
+        paciente = new Paciente(cpf, "João", "joao@email.com", "login",
+                "senha123", "M", "11999999999",
                 LocalDate.of(1990, 1, 1), endereco,
                 LocalDateTime.now(), LocalDateTime.now());
     }
@@ -66,20 +66,20 @@ class PacienteServiceTest {
 
     @Test
     void deveBuscarPacientePorId() {
-        when(pacienteRepository.findById(id)).thenReturn(Optional.of(paciente));
+        when(pacienteRepository.findById(cpf)).thenReturn(Optional.of(paciente));
 
-        Paciente result = service.buscarPacientePorId(id);
+        Paciente result = service.buscarPacientePorId(cpf);
 
-        assertEquals(id, result.getId());
-        verify(pacienteRepository).findById(id);
+        assertEquals(cpf, result.getCpf());
+        verify(pacienteRepository).findById(cpf);
     }
 
     @Test
     void deveLancarExcecaoQuandoPacienteNaoEncontrado() {
-        when(pacienteRepository.findById(id)).thenReturn(Optional.empty());
+        when(pacienteRepository.findById(cpf)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> service.buscarPacientePorId(id));
-        verify(pacienteRepository).findById(id);
+        assertThrows(ResourceNotFoundException.class, () -> service.buscarPacientePorId(cpf));
+        verify(pacienteRepository).findById(cpf);
     }
 
     @Test
@@ -120,59 +120,59 @@ class PacienteServiceTest {
         novo.setNome("Maria");
         novo.setEmail("maria@email.com");
 
-        when(pacienteRepository.findById(id)).thenReturn(Optional.of(paciente));
+        when(pacienteRepository.findById(cpf)).thenReturn(Optional.of(paciente));
         when(pacienteRepository.save(any(Paciente.class))).thenReturn(paciente);
 
-        service.atualizarPacienteExistente(novo, id);
+        service.atualizarPacienteExistente(novo, cpf);
 
-        verify(pacienteRepository).findById(id);
+        verify(pacienteRepository).findById(cpf);
         verify(pacienteRepository).save(any(Paciente.class));
     }
 
     @Test
     void deveLancarExcecaoAoAtualizarQuandoNaoEncontrado() {
-        when(pacienteRepository.findById(id)).thenReturn(Optional.empty());
+        when(pacienteRepository.findById(cpf)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> service.atualizarPacienteExistente(paciente, id));
-        verify(pacienteRepository).findById(id);
+        assertThrows(ResourceNotFoundException.class, () -> service.atualizarPacienteExistente(paciente, cpf));
+        verify(pacienteRepository).findById(cpf);
     }
 
     @Test
     void deveLancarExcecaoAoAtualizarQuandoErroNoBanco() {
-        when(pacienteRepository.findById(id)).thenReturn(Optional.of(paciente));
+        when(pacienteRepository.findById(cpf)).thenReturn(Optional.of(paciente));
         when(pacienteRepository.save(any())).thenThrow(new DataAccessException("Erro ao salvar") {});
 
-        assertThrows(UnprocessableEntityException.class, () -> service.atualizarPacienteExistente(paciente, id));
-        verify(pacienteRepository).findById(id);
+        assertThrows(UnprocessableEntityException.class, () -> service.atualizarPacienteExistente(paciente, cpf));
+        verify(pacienteRepository).findById(cpf);
         verify(pacienteRepository).save(any(Paciente.class));
     }
 
     @Test
     void deveExcluirPacienteComSucesso() {
-        when(pacienteRepository.findById(id)).thenReturn(Optional.of(paciente));
-        doNothing().when(pacienteRepository).deleteById(id);
+        when(pacienteRepository.findById(cpf)).thenReturn(Optional.of(paciente));
+        doNothing().when(pacienteRepository).deleteById(cpf);
 
-        service.excluirPacientePorId(id);
+        service.excluirPacientePorId(cpf);
 
-        verify(pacienteRepository).findById(id);
-        verify(pacienteRepository).deleteById(id);
+        verify(pacienteRepository).findById(cpf);
+        verify(pacienteRepository).deleteById(cpf);
     }
 
     @Test
     void deveLancarExcecaoAoExcluirQuandoNaoEncontrado() {
-        when(pacienteRepository.findById(id)).thenReturn(Optional.empty());
+        when(pacienteRepository.findById(cpf)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> service.excluirPacientePorId(id));
-        verify(pacienteRepository).findById(id);
+        assertThrows(ResourceNotFoundException.class, () -> service.excluirPacientePorId(cpf));
+        verify(pacienteRepository).findById(cpf);
     }
 
     @Test
     void deveLancarExcecaoAoExcluirQuandoErroNoBanco() {
-        when(pacienteRepository.findById(id)).thenReturn(Optional.of(paciente));
-        doThrow(new DataAccessException("Erro ao deletar") {}).when(pacienteRepository).deleteById(id);
+        when(pacienteRepository.findById(cpf)).thenReturn(Optional.of(paciente));
+        doThrow(new DataAccessException("Erro ao deletar") {}).when(pacienteRepository).deleteById(cpf);
 
-        assertThrows(UnprocessableEntityException.class, () -> service.excluirPacientePorId(id));
-        verify(pacienteRepository).findById(id);
-        verify(pacienteRepository).deleteById(id);
+        assertThrows(UnprocessableEntityException.class, () -> service.excluirPacientePorId(cpf));
+        verify(pacienteRepository).findById(cpf);
+        verify(pacienteRepository).deleteById(cpf);
     }
 }
