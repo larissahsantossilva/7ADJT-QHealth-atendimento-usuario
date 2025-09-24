@@ -18,5 +18,6 @@ Além disso, o sistema foi projetado para ser escalável e fácil de integrar co
 ## 🚀 Tecnologias Principais
 - **Java Spring Boot** – API REST robusta e escalável.
 - **Banco de Dados Relacional** – persistência dos dados de pacientes e anamneses.
+- **Swagger/OpenAPI** – documentação interativa dos endpoints. 
 - **JUnit** – criação e execução de testes automatizados.
 - **Docker** – fácil deploy e portabilidade.
