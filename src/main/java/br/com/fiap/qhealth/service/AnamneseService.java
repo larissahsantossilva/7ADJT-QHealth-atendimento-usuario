@@ -33,7 +33,7 @@ public class AnamneseService {
     public Anamnese buscarAnamnesePorId(UUID id) {
         uuidValidator(id);
         return repository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(ID_NAO_ENCONTRADO));
+                new ResourceNotFoundException(ANAMNESE_NAO_ENCONTRADO));
     }
 
     public Anamnese criarAnamnese(Anamnese request) {
